@@ -1,5 +1,5 @@
 Python 3.8.10 (default, Jun  4 2021)
->>> from EmotionDetection import emotion_detector
+>>> from EmotionDetection.emotion_detection import emotion_detector
 >>> emotion_detector("I hate working long hours.")
 {
  'anger': 0.92,
