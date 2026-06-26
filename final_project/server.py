@@ -13,6 +13,9 @@ def emotion_detector_route():
 
     result = emotion_detector(text_to_analyze)
 
+    if result["dominant_emotion"] is None:
+        return "Invalid text! Please try again!"
+
     return jsonify(result)
 
 if __name__ == "__main__":
