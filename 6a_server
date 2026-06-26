@@ -1,17 +1,34 @@
-from flask import Flask, request, jsonify, render_template
-from EmotionDetection import emotion_detector
+from flask import Flask, render_template, request
+from EmotionDetection.emotion_detection import emotion_detector
 
 app = Flask(__name__)
+
+
+def format_emotion_response(emotions):
+    """
+    Format the emotion scores into a readable string.
+    """
+    return (
+        f"Anger: {emotions['anger']}, "
+        f"Disgust: {emotions['disgust']}, "
+        f"Fear: {emotions['fear']}, "
+        f"Joy: {emotions['joy']}, "
+        f"Sadness: {emotions['sadness']}, "
+        f"Dominant Emotion: {emotions['dominant_emotion']}"
+    )
+
 
 @app.route("/")
 def index():
     return render_template("index.html")
 
+
 @app.route("/emotionDetector", methods=["POST"])
 def emotion_detector_route():
     text_to_analyze = request.form["text"]
-    result = emotion_detector(text_to_analyze)
-    return jsonify(result)
+    emotions = emotion_detector(text_to_analyze)
+    return format_emotion_response(emotions)
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
